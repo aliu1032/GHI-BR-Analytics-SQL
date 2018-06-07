@@ -1,6 +1,11 @@
 Select
   A.stdClmTickNum ,A.stdClmCaseNum
-  ,A.stdClmReqNum ,A.stdClmAccession ,A.stdClmPH
+  ,A.stdClmReqNum 
+  ,case
+   when (A.stdClmAccession is null or A.stdClmAccession = '') then 'NONE'
+   else A.stdClmAccession
+   end stdClmAccession
+  ,A.stdClmPH
   ,A.stdClmDOS ,A.stdClmChgEntryDt ,A.stdClmChgAcctPeriod
   ,A.stdClmCurrency ,A.stdClmAmtChg ,A.stdClmAmtRec ,A.stdClmAmtAdj ,A.stdClmTickBal
   ,A.stdClmReRouteIns1Comp ,A.stdClmReRouteIns1 ,A.stdClmReRouteInsCompName
@@ -32,3 +37,4 @@ where stdClmAccession in (
                           or stdClmDOS like '201511%'
                           or stdClmDOS like '201512%'
                           )
+--and stdClmTickNum in ('701515','704486')

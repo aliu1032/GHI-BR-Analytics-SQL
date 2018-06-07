@@ -1,6 +1,11 @@
 Select
     stdPymntAcctNum,stdPymntTickNum,stdPymntCaseNum
-    ,stdPymntReqNum ,stdPymntAccession ,stdPymntPH
+    ,stdPymntReqNum 
+	,Case
+		when (stdPymntAccession is null or stdPymntAccession ='') then 'NONE'
+		else stdPymntAccession
+	 end stdPymntAccession
+	,stdPymntPH
     ,stdPymntDOS ,stdPymntDt ,stdPymntAcctPeriod
     ,stdPymntCurrency ,stdPymntAmt
     ,stdPymntLine ,stdPymntType ,stdPymntCode
@@ -27,3 +32,4 @@ where stdPymntAccession in (
                             or stdPymntDOS like '201511%'
                             or stdPymntDOS like '201512%'
                             )
+--and stdPymntTickNum in ('701515','704486')
