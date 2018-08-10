@@ -89,6 +89,8 @@ Select
     	, dimSalesOrderPayor.Tier3PayorTypeDescription LineOfBenefit
 		*/
 
+		/*
+		, fctOLI.RecognizedPayorKey
 		, dimRecognizedPayor.Tier1PayorID Tier1PayorID
     	, dimRecognizedPayor.Tier1PayorName Tier1PayorName
     	, dimRecognizedPayor.Tier2PayorID Tier2PayorID
@@ -98,6 +100,19 @@ Select
 		, dimRecognizedPayor.Tier4PayorQuadaxInsuranceCode QDXInsPlanCode
 		, dimRecognizedPayor.Tier4PayorFinancialCategoryDescription FinancialCategory
     	, dimRecognizedPayor.Tier3PayorTypeDescription LineOfBenefit
+		*/
+
+		/* Use the Plan on OLI, and associated with the latest Payor Hierarchy */
+		, Payor.Tier1PayorID Tier1PayorID
+		, Payor.Tier1PayorName Tier1PayorName
+		, Payor.Tier2PayorID Tier2PayorID
+		, Payor.Tier2PayorName Tier2PayorName
+		, dimRecognizedPayor.Tier4PayorID Tier4PayorID
+		, Payor.Tier4PayorName Tier4PayorName
+		, Payor.Tier4PayorQuadaxInsuranceCode QDXInsPlanCode
+		, Payor.Tier4PayorFinancialCategoryDescription FinancialCategory
+    	, Payor.Tier3PayorTypeDescription LineOfBenefit
+
 
 
 	/* Claim information */
@@ -211,6 +226,14 @@ from EDWDB.dbo.vwFctOrderLineItem fctOLI
 	/* Recognized Payor is the one stamped on the Claim; Sales Order Payor is the one stamped in the SFDC OLI */
 	--left join EDWDB.dbo.dimPayor dimSalesOrderPayor on fctOLI.SalesOrderPayorKey = dimSalesOrderPayor.PayorKey
 	left join EDWDB.dbo.dimPayor dimRecognizedPayor on fctOLI.RecognizedPayorKey = dimRecognizedPayor.PayorKey
+
+	left join
+	     (select Tier1PayorID, Tier1PayorName, Tier2PayorID, Tier2PayorName, Tier4PayorID, Tier4PayorName,
+		         Tier4PayorQuadaxInsuranceCode, Tier4PayorFinancialCategoryDescription, Tier3PayorTypeDescription
+          from EDWDB.dbo.dimPayor
+          where PayorKey in (select max(PayorKey) from EDWDB.dbo.dimPayor group by Tier4PayorID)
+	      ) Payor on dimRecognizedPayor.Tier4PayorID = Payor.Tier4PayorID
+
 	left join EDWDB.dbo.dimBillingCaseStatus dimBillingCaseStatus on fctOLI.BillingCaseStatusKey = dimBillingCaseStatus.BillingCaseStatusKey
 	left join EDWDB.dbo.dimAppealLevel dimAppLevel on fctOLI.AppealLevelKey = dimAppLevel.AppealLevelKey
 	left join EDWDB.dbo.dimAppealStatus dimAppStatus on fctOLI.AppealStatusKey = dimAppStatus.AppealStatusKey
@@ -244,9 +267,11 @@ where
 		   and dimOrderStartDateA.CalendarYearValue >= 2016
 		   --and dimOrderStartDateA.CalendarMonthValue = 11
         )
-  --and fctOLI.OrderLineItemID in ('OL000924850','OL000976889','OL000980257','OL000894023','OL000956678','OL000966321','OL000887155','OL000939777')
- -- and fctOLI.OrderLineItemID in ('OL000761250','OL000913816')
+ --and fctOLI.OrderLineItemID in ('OL000924850','OL000976889','OL000980257','OL000894023','OL000956678','OL000966321','OL000887155','OL000939777')
  --and fctOLI.OrderID in ('OR001077870','OR001077883','OR001078111')
+-- and fctOLI.OrderLineItemID in ('OL001088300','OL001080997')
+-- and dimRecognizedPayor.Tier4PayorID = 'PL0000751'
+
  /** need to use left join because there are null values in keys **/
  
 

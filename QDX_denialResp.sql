@@ -29,3 +29,19 @@
 	--where denialRespDt like '2017%'
 	--   or denialRespDt like '2018%'
 	order by denialErrorSeq
+
+
+
+select appealCaseNumber, appealEntryDt, appealDenialLetterDt, appealLetDt, appealPendDt, appealDeadDt
+from dbo.appeal
+where appealCaseNumber = '804607'
+
+select appealAccession, appealDenDt, appealRptDt
+from dbo.appealSuccess
+where appealCaseNum = '804607'
+
+
+select appealCaseNumber, appealDenialLetterDt, appealEntryDt, appealLetDt
+from dbo.appeal
+where appealCaseNumber = '1133319'
+where appealDenialLetterDt= ''

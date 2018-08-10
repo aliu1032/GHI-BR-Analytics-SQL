@@ -40,7 +40,7 @@ from
                             , dimPayor.Tier4PayorFinancialCategoryDescription FinancialCategory
                             , dimPayor.Tier2PayorPricingCategoryDescription T2PricingCategory
                             , dimPayor.Tier3PayorTypeDescription Tier3PayorType
-                            , dimPayor.Tier4PayorLineOfBusiness T4LineOfBusiness
+                            --, dimPayor.Tier4PayorLineOfBusiness T4LineOfBusiness
                             , dimPayor.GNAMTerritoryID GNAMTerritoryID
                             , dimPayor.StandardizedTier2PayorState ClaimPayorState
                             , dimPayor.Tier2PayorCountryISOCode

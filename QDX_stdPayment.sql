@@ -20,7 +20,7 @@ Select
        Information about the Payor & plan making the payment */
     ,stdPymntCodeComp ,stdPymntFC ,stdPymntCodeCompAlt ,stdPymntCodeAltCode
     /*  */
---    ,stdPymntAllowedAmt ,stdPymntDeductibleAmt ,stdPymntCoinsAmt
+    ,stdPymntAllowedAmt ,stdPymntDeductibleAmt ,stdPymntCoinsAmt
 from Quadax.dbo.stdPaymentFile
 where stdPymntAccession in (
                             Select stdPymntAccession

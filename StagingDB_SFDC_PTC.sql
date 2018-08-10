@@ -67,6 +67,8 @@ where ptc.OSM_Payor__c = A.Id
   and ptc.RecordTypeId = RecT.Id	
   and ptc.OSM_Type__c in ('CT','MP')
   and ptc.LastModifiedDate >= '04-30-2018'
+  and ptc.IsDeleted = 0
+  and ptc.OSM_Line_of_Business__c != 'Default'
 --  and RecT.Name = 'IBC'
 
   Union All
@@ -142,5 +144,7 @@ where ptc.OSM_Plan__c = P.Id
   and ptc.RecordTypeId = RecT.Id
   and P.OSM_Status__c = 'Active'
   and ptc.OSM_Type__c in ('CT','MP')
-  and ptc.LastModifiedDate >= '04-30-2018' 
+  and ptc.LastModifiedDate >= '04-30-2018'
+  and ptc.IsDeleted = 0
+  and ptc.OSM_Line_of_Business__c != 'Default'
 --  and RecT.Name = 'IBC'

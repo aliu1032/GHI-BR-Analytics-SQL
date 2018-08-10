@@ -19,10 +19,13 @@ select
 	, Code.virtualTableInfo2
 	, priorAuthResult_Category = 
 	  case
-		when Code.virtualTableInfo2 = 'PPA' then 'Pending'
-		when Code.virtualTableInfo2 = 'PAY' then 'Success'
-		when Code.virtualTableInfo2 = 'PAN' then 'Failed'
+		when Code.virtualTableInfo2 = 'PPA' then 'Pending'  -- Pending PA
+		when Code.virtualTableInfo2 = 'PAY' then 'Success'  -- PA Yes
+		when Code.virtualTableInfo2 = 'PAN' then 'Failed'   -- PA No
 	  end
+	, case
+	  when Code.virtualTableDesc in ( 'Attempts Exhausted' ,'DOS/No Retro', 'MD NonCompliant', 'AIM MD Non-Compliant','Received Incomplete') then 'Failure'
+	  end as PreClaim_Failure
 from Quadax.dbo.priorAuth PA
 left join (select distinct virtualTableCode
 				,virtualTableDesc

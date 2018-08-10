@@ -1,5 +1,5 @@
 /* PTV data dump */
-Select ptv.Name PTV_id
+Select ptv.Name
 , ptv.LastModifiedDate
 , A.OSM_Account_Number__c Tier2PayorId
 , A.Name Tier2Payor
@@ -8,9 +8,9 @@ Select ptv.Name PTV_id
 , '' as QDX_InsPlan_Code
 , A.OSM_Status__c Payor_Plan_Status
 , '' as Financial_Category
-, ptv.OSM_Line_of_Business__c
-, '' as Tier3
-, ptv.OSM_Line_of_Benefits__c
+, ptv.OSM_Line_of_Business__c Line_of_Business
+, '' as Line_of_Benefits
+, ptv.OSM_Line_of_Benefits__c PTV_Line_of_Benefits
 , Test.Name Test
 , ptv.OSM_Effective_Start_Date__c
 , ptv.OSM_Effective_End_Date__c
@@ -31,10 +31,11 @@ and ptv.OSM_Payor__c is not null
 and A.OSM_Status__c = 'Approved'
 and ptv.OSM_Test__c = test.Id
 and ptv.LastModifiedDate >= '04-17-2018'
+and ptv.OSM_Line_of_Business__c != 'Default'
 
 Union All
 
-Select ptv.Name PTV_id
+Select ptv.Name
 , ptv.LastModifiedDate
 , A.OSM_Account_Number__c Tier2PayorId
 , A.Name Tier2Payor
@@ -43,9 +44,9 @@ Select ptv.Name PTV_id
 , P.OSM_QDX_Insurance_Plan_Code__c QDX_InsPlan_Code
 , P.OSM_Status__c Payor_Plan_Status
 , P.OSM_QDX_Financial_Category__c Financial_Category
-, ptv.OSM_Line_of_Business__c
-, RecordType.Name Tier3
-, ptv.OSM_Line_of_Benefits__c
+, ptv.OSM_Line_of_Business__c Line_of_Business
+, RecordType.Name Line_of_Benefits
+, ptv.OSM_Line_of_Benefits__c PTV_Line_of_Benefits
 , Test.Name Test
 , ptv.OSM_Effective_Start_Date__c
 , ptv.OSM_Effective_End_Date__c
@@ -70,4 +71,5 @@ and P.RecordTypeId = RecordType.Id
 and P.OSM_Status__c = 'Active'
 and P.OSM_Payor__c = A.Id
 and ptv.LastModifiedDate >= '04-17-2018'
+and ptv.OSM_Line_of_Business__c != 'Default'
 --and P.OSM_Plan_ID__c = 'PL0006065'
