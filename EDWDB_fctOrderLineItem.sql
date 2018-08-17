@@ -140,16 +140,15 @@ Select
 		  when dimTest.TestName = 'Prostate' then dimClinicalCriteria.Prostate_HCPProvidedClinicalStageDescription
 		  END AS HCPProvidedClinicalStage
 
-		, dimClinicalCriteria.IBC_ERStatusDescription SubmittedERStatus
+		, dimClinicalCriteria.IBC_ERStatusDescription SubmittedER
 		, dimClinicalCriteria.IBC_SubmittedHer2Description SubmittedHER2
 		, MultiplePrimaries = (fctOLI.IsMultiplePrimaryConfirmed & fctOLI.IsMultiplePrimaryRequested)
 		, fctOLI.IsMultiplePrimaryConfirmed
 		, fctOLI.IsMultiplePrimaryRequested
 		, fctOLI.HCPProvidedPSA
 		, dimClinicalCriteria.Prostate_HCPProvidedGleasonScoreDescription HCPProvidedGleasonScore
-
-	-- not submit PR yet
-
+		, dimOrderLineItem.IBC_TumorSizeCentimeters
+		, dimOrderLineItem.IBC_SubmittedPRStatusDescription SubmittedPR
 		, fctOLI.DCISTumorSize DCISTumorSize
     	, dimClinicalCriteria.DCIS_TumorSizeRangeDescription DCISTumorSizeRange
 		, dimClinicalCriteria.Prostate_NCCNRiskCategoryDescription SubmittedNCCNRisk
@@ -218,6 +217,7 @@ from EDWDB.dbo.vwFctOrderLineItem fctOLI
 	left join EDWDB.dbo.dimAppealDenialReason dimAppDenial on fctOLI.AppealDenialReasonKey = dimAppDenial.AppealDenialReasonKey
 	left join EDWDB.dbo.dimCurrency dimCurrency on fctOLI.CurrentBilledCurrencyKey = dimCurrency.CurrencyKey
 	left join EDWDB.dbo.dimClinicalCriteria dimClinicalCriteria on fctOLI.ClinicalCriteriaKey = dimClinicalCriteria.ClinicalCriteriaKey
+	left join EDWDB.dbo.dimOrderLineItem dimOrderLineItem on fctOLI.OrderLineItemID = dimOrderLineItem.OrderLineItemID
 	left join EDWDB.dbo.dimCategoricalLabResult dimCategoricalLabResult on fctOLI.CategoricalLabResultKey = dimCategoricalLabResult.CategoricalLabResultKey
 	left join EDWDB.dbo.dimFailureCode dimFailureCode on fctOLI.FailureCodeKey = dimFailureCode.FailureCodeKey
 	left join EDWDB.dbo.dimTriageOutcome dimTriageOutcome on fctOLI.TriageOutcomeKey = dimTriageOutcome.TriageOutcomeKey
@@ -244,9 +244,10 @@ where
 		   and dimOrderStartDateA.CalendarYearValue >= 2016
 		   --and dimOrderStartDateA.CalendarMonthValue = 11
         )
-  --and fctOLI.OrderLineItemID in ('OL000924850','OL000976889','OL000980257','OL000894023','OL000956678','OL000966321','OL000887155','OL000939777')
+ -- and fctOLI.OrderLineItemID in ('OL001046979','OL001006299','OL001097795','OL001097779','OL001096680','OL001098246','OL001100732')
  -- and fctOLI.OrderLineItemID in ('OL000761250','OL000913816')
- --and fctOLI.OrderID in ('OR001077870','OR001077883','OR001078111')
+ -- and fctOLI.OrderID in ('OR001077870','OR001077883','OR001078111')
+
  /** need to use left join because there are null values in keys **/
  
 

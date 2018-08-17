@@ -10,6 +10,7 @@ select
 	, B.virtualTableDesc appealStatusDesc
 	, A.appealEntryDt, A.appealDenialLetterDt, A.appealLetDt, A.appealPendDt
 	, A.appealAllowed
+	, A.appealCampaignCode
 from Quadax.dbo.appeal A
 left join (select distinct virtualTableCode, virtualTableDesc
 		   from Quadax.dbo.virtualSelfDescInfo
