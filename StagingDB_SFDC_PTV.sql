@@ -1,9 +1,9 @@
 /* PTV data dump */
 Select ptv.Name
 , ptv.LastModifiedDate
-, A.OSM_Account_Number__c Tier2PayorId
+, A.OSM_Account_Number__c Tier2PayorID
 , A.Name Tier2Payor
-, '' as Tier4PayorId
+, '' as Tier4PayorID
 , '' as Tier4Payor
 , '' as QDX_InsPlan_Code
 , A.OSM_Status__c Payor_Plan_Status
@@ -37,9 +37,9 @@ Union All
 
 Select ptv.Name
 , ptv.LastModifiedDate
-, A.OSM_Account_Number__c Tier2PayorId
+, A.OSM_Account_Number__c Tier2PayorID
 , A.Name Tier2Payor
-, P.OSM_Plan_ID__c Tier4PayorId
+, P.OSM_Plan_ID__c Tier4PayorID
 , P.Name Tier4Payor
 , P.OSM_QDX_Insurance_Plan_Code__c QDX_InsPlan_Code
 , P.OSM_Status__c Payor_Plan_Status

@@ -5,9 +5,9 @@ select
 	, ptc.LastModifiedDate
 --	, ptc.OSM_Test_Name__c
 	, A.Name Tier2PayorName
-	, A.OSM_Account_Number__c Tier2PayorId
+	, A.OSM_Account_Number__c Tier2PayorID
 	, '' as Tier4PayorName
-	, '' as Tier4PayorId
+	, '' as Tier4PayorID
 	, '' as QDX_InsPlan_Code
 	, A.OSM_Status__c Payor_Plan_Status
 	, '' as Financial_Category
@@ -80,9 +80,9 @@ select
 	, RecT.Name Test	
 	, ptc.LastModifiedDate
 	, A.Name Tier2PayorName
-	, A.OSM_Account_Number__c Tier2PayorId
+	, A.OSM_Account_Number__c Tier2PayorID
 	, P.Name Tier4PayorName
-	, P.OSM_Plan_ID__c Tier4PayorId
+	, P.OSM_Plan_ID__c Tier4PayorID
 	, P.OSM_QDX_Insurance_Plan_Code__c QDX_InsPlan_Code
 	, P.OSM_Status__c Payor_Plan_Status
 	, P.OSM_QDX_Financial_Category__c Financial_Category

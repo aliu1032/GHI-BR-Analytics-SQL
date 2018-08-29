@@ -30,8 +30,12 @@ Select
     	, fctOLI.IsFullyAdjudicated IsFullyAdjudicated
 		, fctOLI.DemandByTest Reportable
 		, fctOLI.CreditableTest Creditable
-		, dimBillableStatus.IsCharge IsCharge /*ref: fctRevenue : sth. to do will bill account */  
-		, dimBillableStatus.IsInCoverageCriteria NSInCriteria
+		, dimBillableStatus.IsCharge IsCharge /*ref: fctRevenue : sth. to do will bill account */
+		, Case 
+		  when dimBillableStatus.IsInCoverageCriteria = 1 then 'In'
+		  when dimBillableStatus.IsInCoverageCriteria = 0 then 'Out'
+		  else 'Unknown'
+		  end as NSInCriteria /* reference: dimCoverageCriteriaStatus.IsInCoverageCriteriaName */
     	, dimBillableStatus.RevenueStatus RevenueStatus
 		, dimBillableStatus.BillingStatusDescription BillingStatus /*this is the SFDC Billing Status, this does not always reflect BilledTest = 1*/
 		, dimBillableStatus.BillTypeDescription BillType
@@ -203,6 +207,7 @@ from EDWDB.dbo.vwFctOrderLineItem fctOLI
 	left join EDWDB.dbo.dimChannel dimChannel on fctOLI.ChannelKey = dimChannel.ChannelKey
 	left join EDWDB.dbo.dimCancellationReason on fctOLI.CancellationReasonKey = dimCancellationReason.CancellationReasonKey
 	left join EDWDB.dbo.dimBillableStatus dimBillableStatus on fctOLI.BillableStatusKey = dimBillableStatus.BillableStatusKey
+	left join EDWDB.dbo.dimCoverageCriteriaStatus dimCoverageCriteriaStatus on dimBillableStatus.IsInCoverageCriteria = dimCoverageCriteriaStatus.IsInCoverageCriteria
 	left join EDWDB.dbo.dimTerritory dimTerritory on fctOLI.OriginalTerritoryKey = dimTerritory.TerritoryKey
 	left join EDWDB.dbo.dimHCP dimOrderingHCP on fctOLI.OrderingHCPKey = dimOrderingHCP.HCPKey
 	left join EDWDB.dbo.dimHCO dimOriginalOrderingHCO on fctOLI.OriginalOrderingHCOKey = dimOriginalOrderingHCO.HCOKey 
