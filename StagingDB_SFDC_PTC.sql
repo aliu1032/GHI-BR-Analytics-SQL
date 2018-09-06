@@ -59,14 +59,11 @@ select
 	, ptc.GHI_ExtraNoteOnTestCoverage__c
 
 from StagingDB.ODS.stgPTC ptc
-	, StagingDB.ODS.StgAccount A
-	, StagingDB.ODS.stgRecordType RecT
-where ptc.OSM_Payor__c = A.Id
-  and ptc.OSM_Payor__c is not null and ptc.OSM_Plan__c is null
-  and A.OSM_Status__c = 'Approved'
-  and ptc.RecordTypeId = RecT.Id	
+left join StagingDB.ODS.StgAccount A on A.Id = ptc.OSM_Payor__c
+left join StagingDB.ODS.stgRecordType RecT on ptc.RecordTypeId = RecT.Id
+where ptc.OSM_Payor__c is not null and ptc.OSM_Plan__c is null
+  and A.OSM_Status__c = 'Approved'	
   and ptc.OSM_Type__c in ('CT','MP')
-  and ptc.LastModifiedDate >= '04-30-2018'
   and ptc.IsDeleted = 0
   and ptc.OSM_Line_of_Business__c != 'Default'
 --  and RecT.Name = 'IBC'
@@ -134,17 +131,14 @@ select
 	, ptc.GHI_ExtraNoteOnTestCoverage__c
 
 from StagingDB.ODS.stgPTC ptc
-	, StagingDB.ODS.stgPlan P
-	, StagingDB.ODS.StgAccount A
-	, StagingDB.ODS.stgRecordType RecT
-where ptc.OSM_Plan__c = P.Id
-  and ptc.OSM_Plan__c is not null
-  and ptc.OSM_Payor__c is null
-  and P.OSM_Payor__c = A.Id
-  and ptc.RecordTypeId = RecT.Id
+left join StagingDB.ODS.stgPlan P on P.Id = ptc.OSM_Plan__c
+left join StagingDB.ODS.StgAccount A on A.Id = P.OSM_Payor__c
+left join StagingDB.ODS.stgRecordType RecT on RecT.Id = ptc.RecordTypeId
+where 
+  ptc.OSM_Plan__c is not null
   and P.OSM_Status__c = 'Active'
   and ptc.OSM_Type__c in ('CT','MP')
-  and ptc.LastModifiedDate >= '04-30-2018'
   and ptc.IsDeleted = 0
   and ptc.OSM_Line_of_Business__c != 'Default'
 --  and RecT.Name = 'IBC'
+-- and p.OSM_Plan_ID__c = 'PL0003959'

@@ -23,14 +23,11 @@ Select ptv.Name
 --, ptv.OSM_Report_Hold__c
 --, ptv.OSM_Statement_of_Medical_Necessity__c
 FROM [StagingDB].[ODS].[stgPTV] ptv
-, StagingDB.ODS.StgAccount A
-, StagingDB.ODS.StgProduct test
+left join StagingDB.ODS.StgAccount A on ptv.OSM_Payor__c = A.Id
+left join StagingDB.ODS.StgProduct test on ptv.OSM_Test__c = test.Id
 where 
-ptv.OSM_Payor__c = A.Id
-and ptv.OSM_Payor__c is not null
+ptv.OSM_Payor__c is not null
 and A.OSM_Status__c = 'Approved'
-and ptv.OSM_Test__c = test.Id
-and ptv.LastModifiedDate >= '04-17-2018'
 and ptv.OSM_Line_of_Business__c != 'Default'
 
 Union All
@@ -59,17 +56,12 @@ Select ptv.Name
 --, ptv.OSM_Report_Hold__c
 --, ptv.OSM_Statement_of_Medical_Necessity__c
 FROM [StagingDB].[ODS].[stgPTV] ptv
-, StagingDB.ODS.StgAccount A
-, StagingDB.ODS.stgPlan P
-, StagingDB.ODS.StgProduct test
-, StagingDB.ODS.stgRecordType RecordType
+left join StagingDB.ODS.stgPlan P on ptv.OSM_Plan__c = P.Id
+left join StagingDB.ODS.StgProduct test on ptv.OSM_Test__c = test.Id
+left join StagingDB.ODS.stgRecordType RecordType on P.RecordTypeId = RecordType.Id
+left join StagingDB.ODS.StgAccount A on P.OSM_Payor__c = A.Id
 where 
-ptv.OSM_Plan__c = P.Id
-and ptv.OSM_Plan__c is not null
-and ptv.OSM_Test__c = test.Id
-and P.RecordTypeId = RecordType.Id
+ptv.OSM_Plan__c is not null
 and P.OSM_Status__c = 'Active'
-and P.OSM_Payor__c = A.Id
-and ptv.LastModifiedDate >= '04-17-2018'
 and ptv.OSM_Line_of_Business__c != 'Default'
 --and P.OSM_Plan_ID__c = 'PL0006065'
