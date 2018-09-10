@@ -24,7 +24,7 @@ select
 		when Code.virtualTableInfo2 = 'PAN' then 'Failed'   -- PA No
 	  end
 	, case
-	  when Code.virtualTableDesc in ( 'Attempts Exhausted' ,'DOS/No Retro', 'MD NonCompliant', 'AIM MD Non-Compliant','Received Incomplete') then 'Failure'
+	  when Code.virtualTableDesc in ( 'Attempts Exhausted' ,'DOS/No Retro', 'MD NonCompliant', 'AIM MD Non-Compliant','Received Incomplete', 'MD Noncompliant') then 'Failure'
 	  end as PreClaim_Failure
 from Quadax.dbo.priorAuth PA
 left join (select distinct virtualTableCode
@@ -35,9 +35,7 @@ left join (select distinct virtualTableCode
 			from Quadax.dbo.virtualSelfDescInfo
 			where virtualTableType = 'PS') Code
 on CONCAT(PA.priorAuthReq, PA.priorAuthStatus) = Code.virtualTableCode
-where (priorAuthEnteredDt like '2015%'
-   or priorAuthEnteredDt like '2016%'
-   or priorAuthEnteredDt like '2017%'
+where (priorAuthEnteredDt like '2017%'
    or priorAuthEnteredDt like '2018%')
 
 

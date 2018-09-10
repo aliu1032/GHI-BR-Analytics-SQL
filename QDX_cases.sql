@@ -14,7 +14,6 @@ select C.*
 			   where clientTableType = 'CS') Code
 	on caseStatus = clientTableCode
 where caseAccession is not null and
-          (caseEntryYrMth like '2015%' or
-           caseEntryYrMth like '2016%' or
+          (caseEntryYrMth like '2016%' or
            caseEntryYrMth like '2017%' or
            caseEntryYrMth like '2018%')

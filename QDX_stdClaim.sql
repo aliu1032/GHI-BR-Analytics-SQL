@@ -30,11 +30,10 @@ left join (select distinct clientTableCode, clientTableDesc
 where stdClmAccession in (
                           Select stdClmAccession
                           from Quadax.dbo.stdClaimFile
-                          where stdClmDOS like '2016%'
-                          or stdClmDOS like '2017%'
+                          where stdClmDOS like '2017%'
                           or stdClmDOS like '2018%'
-                          or stdClmDOS like '201510%'
-                          or stdClmDOS like '201511%'
-                          or stdClmDOS like '201512%'
+                          or stdClmDOS like '201610%'
+                          or stdClmDOS like '201611%'
+                          or stdClmDOS like '201612%'
                           )
 --and stdClmTickNum in ('701515','704486')

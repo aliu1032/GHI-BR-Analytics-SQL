@@ -148,7 +148,7 @@ from
                     where fctOLI.TestDeliveredDateKey = dimTestDeliveryDate.DateKey
                     ) OLI
 		on Rev.OrderLineItemID = OLI.OrderLineItemID
-    where Rev.AccountingPeriodDate >= 20160101
+    where Rev.AccountingPeriodDate >= 20170101
     /*
 		and Rev.OrderLineItemID = 'OL000738856'
 	*/

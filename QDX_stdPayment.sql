@@ -25,11 +25,10 @@ from Quadax.dbo.stdPaymentFile
 where stdPymntAccession in (
                             Select stdPymntAccession
                             from Quadax.dbo.stdPaymentFile
-                            where stdPymntDOS like '2016%'
-                            or stdPymntDOS like '2017%'
+                            where stdPymntDOS like '2017%'
                             or stdPymntDOS like '2018%'
-                            or stdPymntDOS like '201510%'
-                            or stdPymntDOS like '201511%'
-                            or stdPymntDOS like '201512%'
+                            or stdPymntDOS like '201610%'
+                            or stdPymntDOS like '201611%'
+                            or stdPymntDOS like '201612%'
                             )
 --and stdPymntTickNum in ('701515','704486')

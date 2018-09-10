@@ -236,7 +236,7 @@ where
 		 FROM [EDWDB].[dbo].[fctRevenue] fctRev
 		     ,[EDWDB].[dbo].[dimAccountingPeriod] dimAcctPeriod
 		where fctRev.RevenueAccountingPeriodKey = dimAcctPeriod.AccountingPeriodKey
-		  and dimAcctPeriod.AccountingPeriodYearValue >=2016
+		  and dimAcctPeriod.AccountingPeriodYearValue >=2017
 		  --and dimAcctPeriod.AccountingPeriodMonthValue = 11
 		  --and dimAcctPeriod.AccountingPeriodMonthValue <= 11
 
@@ -246,7 +246,7 @@ where
 		   from EDWDB.dbo.vwFctOrderLineItem
 		 	  , EDWDB.dbo.dimDate dimOrderStartDateA
 		 where OrderStartDateKey = dimOrderStartDateA.DateKey
-		   and dimOrderStartDateA.CalendarYearValue >= 2016
+		   and dimOrderStartDateA.CalendarYearValue >= 2017
 		   --and dimOrderStartDateA.CalendarMonthValue = 11
         )
  -- and fctOLI.OrderLineItemID in ('OL001046979','OL001006299','OL001097795','OL001097779','OL001096680','OL001098246','OL001100732')
