@@ -20,9 +20,11 @@ Select
 		, dimOLIStatus.OrderLineItemLabAndReportStatusDescription LabReportStatus
 		, dimChannel.ChannelDescription Channel
 
-	/* Order & OLI Cancellation Reason */
+	/* Order & OLI Cancellation Reason and Dates */
 		, dimCancellationReason.OrderCancellationReasonDescription OrderCancellationReason
 		, dimCancellationReason.OrderLineItemCancellationReasonDescription OrderLineItemCancellationReason
+		, case when OLITAT.OrderCancellationDateKey > 0 then dimOrderCancellationDate.DateInteger end as OrderCancellationDate
+		, case when OLITAT.OrderLineItemCancellationDateKey > 0 then dimOrderLineItemCancellationDate.DateInteger end as OrderLineItemCancellationDate
 
 	/* OLI Flags */
     	, fctOLI.TestDelivered TestDelivered
@@ -206,6 +208,9 @@ from EDWDB.dbo.vwFctOrderLineItem fctOLI
 	left join EDWDB.dbo.dimStatus dimOLIStatus on fctOLI.StatusKey  = dimOLIStatus.StatusKey
 	left join EDWDB.dbo.dimChannel dimChannel on fctOLI.ChannelKey = dimChannel.ChannelKey
 	left join EDWDB.dbo.dimCancellationReason on fctOLI.CancellationReasonKey = dimCancellationReason.CancellationReasonKey
+	left join EDWDB.dbo.fctOrderLineItemTAT OLITAT on OLITAT.OrderLineItemID = fctOLI.OrderLineItemID
+	left join EDWDB.dbo.dimDate dimOrderCancellationDate on dimOrderCancellationDate.DateKey = OLITAT.OrderCancellationDateKey
+	left join EDWDB.dbo.dimDate dimOrderLineItemCancellationDate on dimOrderLineItemCancellationDate.DateKey = OLITAT.OrderLineItemCancellationDateKey
 	left join EDWDB.dbo.dimBillableStatus dimBillableStatus on fctOLI.BillableStatusKey = dimBillableStatus.BillableStatusKey
 	left join EDWDB.dbo.dimCoverageCriteriaStatus dimCoverageCriteriaStatus on dimBillableStatus.IsInCoverageCriteria = dimCoverageCriteriaStatus.IsInCoverageCriteria
 	left join EDWDB.dbo.dimTerritory dimTerritory on fctOLI.OriginalTerritoryKey = dimTerritory.TerritoryKey
