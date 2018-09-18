@@ -260,8 +260,3 @@ where
 
  /** need to use left join because there are null values in keys **/
  
-
- /*ISCharge - CAST(CASE StgAccount.OSM_Account_Number__c WHEN  'CR088578'
-                              THEN 0
-                              ELSE 1
-                         END AS SMALLINT) IsCharge*/
