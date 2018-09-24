@@ -8,16 +8,17 @@ Select
   ,A.stdClmPH
   ,A.stdClmDOS ,A.stdClmChgEntryDt ,A.stdClmChgAcctPeriod
   ,A.stdClmCurrency ,A.stdClmAmtChg ,A.stdClmAmtRec ,A.stdClmAmtAdj ,A.stdClmTickBal
-  ,A.stdClmReRouteIns1Comp ,A.stdClmReRouteIns1 ,A.stdClmReRouteInsCompName
+  ,A.stdClmReRouteIns1Comp ,Ltrim(RTRIM(A.stdClmReRouteIns1)) stdClmReRouteIns1, A.stdClmReRouteInsCompName
   ,A.stdClmReRouteInsPlanName ,A.stdClmReRouteInsFC
-  ,A.stdClmReRouteIns1CompAlt ,A.stdClmReRouteIns1AltCode
-  ,A.stdClmRostAcctNum
+  ,A.stdClmReRouteIns1CompAlt ,LTRIM(RTRIM(A.stdClmReRouteIns1AltCode)) stdClmReRouteIns1AltCode
+  ,LTRIM(RTRIM(A.stdClmRostAcctNum)) stdClmRostAcctNum
 --  ,stdClmRostInvoice
-  ,A.stdClmIns1Comp ,A.stdClmIns1 ,A.stdClmInsCompName
-  ,A.stdClmInsPlanName ,A.stdClmInsFC ,A.stdClmIns1CompAlt ,A.stdClmIns1AltCode
+  ,A.stdClmIns1Comp , LTRIM(RTRIM(A.stdClmIns1)) stdClmIns1 ,A.stdClmInsCompName
+  ,A.stdClmInsPlanName ,A.stdClmInsFC ,A.stdClmIns1CompAlt ,LTRIM(RTRIM(A.stdClmIns1AltCode)) stdClmIns1AltCode
   ,A.stdClmStatusDt ,A.stdClmCaseStatus ,A.stdClmTickStatus
   ,A.stdClmCIE
-  ,Code.clientTableCode BillingCaseStatusCode
+  , A.stdClmInitBillDt, A.stdClmInitPymntDt, A.stdClmLastBillDt, A.stdClmLastPymntDt
+  , Code.clientTableCode BillingCaseStatusCode
   , Code.clientTableDesc BillingCaseStatus
   , Code.clientTableInfo BillingCaseStatusSummary1
   , Code.clientTableInfo2 BillingCaseStatusSummary2
