@@ -24,7 +24,9 @@ select
 		when Code.virtualTableInfo2 = 'PAN' then 'Failed'   -- PA No
 	  end
 	, case
-	  when Code.virtualTableDesc in ( 'Attempts Exhausted' ,'DOS/No Retro', 'MD NonCompliant', 'AIM MD Non-Compliant','Received Incomplete', 'MD Noncompliant') then 'Failure'
+	  when Code.virtualTableDesc in ( 'Attempts Exhausted' ,'DOS/No Retro', 'MD NonCompliant', 'AIM MD Non-Compliant','Received Incomplete', 'MD Noncompliant') 
+	  then 'Failure'
+	  else 'Non Failure'
 	  end as PreClaim_Failure
 from Quadax.dbo.priorAuth PA
 left join (select distinct virtualTableCode
