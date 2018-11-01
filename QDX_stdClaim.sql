@@ -16,7 +16,8 @@ Select
   ,A.stdClmIns1Comp , LTRIM(RTRIM(A.stdClmIns1)) stdClmIns1 ,A.stdClmInsCompName
   ,A.stdClmInsPlanName ,A.stdClmInsFC ,A.stdClmIns1CompAlt ,LTRIM(RTRIM(A.stdClmIns1AltCode)) stdClmIns1AltCode
   ,A.stdClmStatusDt ,A.stdClmCaseStatus ,A.stdClmTickStatus
-  ,A.stdClmCIE
+  ,A.stdClmCIE, A.stdClmPtState
+
   , A.stdClmInitBillDt, A.stdClmInitPymntDt, A.stdClmLastBillDt, A.stdClmLastPymntDt
   , Code.clientTableCode BillingCaseStatusCode
   , Code.clientTableDesc BillingCaseStatus
@@ -28,6 +29,16 @@ left join (select distinct clientTableCode, clientTableDesc
 			   from Quadax.dbo.clientSelfDescInfo
 			   where clientTableType = 'CS') Code
 	on stdClmCaseStatus = clientTableCode
+where stdClmTickNum in (
+                          Select stdClmTickNum
+                          from Quadax.dbo.stdClaimFile
+                          where stdClmDOS like '2017%'
+                          or stdClmDOS like '2018%'
+                          or stdClmDOS like '201610%'
+                          or stdClmDOS like '201611%'
+                          or stdClmDOS like '201612%'
+                          )
+/*
 where stdClmAccession in (
                           Select stdClmAccession
                           from Quadax.dbo.stdClaimFile
@@ -37,4 +48,5 @@ where stdClmAccession in (
                           or stdClmDOS like '201611%'
                           or stdClmDOS like '201612%'
                           )
+						  */
 --and stdClmTickNum in ('701515','704486')

@@ -14,6 +14,7 @@ select
 	, ptc.OSM_Line_of_Business__c Line_of_Business
 	, ptc.OSM_Eff_Start_Clinical_Criteria__c
 	, ptc.OSM_Eff_End_Clinical_Criteria__c
+	, ptc.OSM_Policy_Status__c Policy_Status
 
 	, ptc.GHI_RecentlyNewlyDiagnosis__c  --IBC
 	, ptc.GHI_AgeAtDiagnosisRange__c   --IBC
@@ -86,6 +87,7 @@ select
 	, ptc.OSM_Line_of_Business__c Line_of_Business
 	, ptc.OSM_Eff_Start_Clinical_Criteria__c
 	, ptc.OSM_Eff_End_Clinical_Criteria__c
+	, ptc.OSM_Policy_Status__c Policy_Status
 
 	, ptc.GHI_RecentlyNewlyDiagnosis__c  --IBC
 	, ptc.GHI_AgeAtDiagnosisRange__c   --IBC

@@ -147,18 +147,26 @@ Select
 		  END AS HCPProvidedClinicalStage
 
 		, dimClinicalCriteria.IBC_ERStatusDescription SubmittedER
+		, dimOrderLineItem.IBC_SubmittedPRStatusDescription SubmittedPR
 		, dimClinicalCriteria.IBC_SubmittedHer2Description SubmittedHER2
 		, MultiplePrimaries = (fctOLI.IsMultiplePrimaryConfirmed & fctOLI.IsMultiplePrimaryRequested)
 		, fctOLI.IsMultiplePrimaryConfirmed
 		, fctOLI.IsMultiplePrimaryRequested
-		, fctOLI.HCPProvidedPSA
-		, dimClinicalCriteria.Prostate_HCPProvidedGleasonScoreDescription HCPProvidedGleasonScore
 		, dimOrderLineItem.IBC_TumorSizeCentimeters
-		, dimOrderLineItem.IBC_SubmittedPRStatusDescription SubmittedPR
 		, fctOLI.DCISTumorSize DCISTumorSize
     	, dimClinicalCriteria.DCIS_TumorSizeRangeDescription DCISTumorSizeRange
-		, dimClinicalCriteria.Prostate_NCCNRiskCategoryDescription SubmittedNCCNRisk
 
+		, dimClinicalCriteria.Prostate_NCCNRiskCategoryDescription SubmittedNCCNRisk
+		, dimClinicalCriteria.Prostate_HCPProvidedGleasonScoreDescription HCPProvidedGleasonScore
+		, fctOLI.HCPProvidedPSA
+		, fctOLI.ProstateVolume
+		, fctOLI.PSADensity
+		, fctOLI.NumberOfCoresCollected
+		, fctOLI.HCPProvidedNumberOfPositiveCores
+		, dimClinicalCriteria.Prostate_MaxPctOfTumorInvolvementInAnyCoreDescription MaxPctOfTumorInvolvementInAnyCore
+		, fctOLI.NumberOf4Plus3Cores
+		, dimClinicalCriteria.Prostate_PreGPSManagementRecommendationDescription PreGPSManagementRecommendation
+		, fctOLI.OtherPreGPSManagementRecommendation
 
 	/* Test result from GHI lab */
 		, dimCategoricalLabResult.RiskGroupDescription RiskGroup
@@ -254,6 +262,7 @@ where
 		   and dimOrderStartDateA.CalendarYearValue >= 2017
 		   --and dimOrderStartDateA.CalendarMonthValue = 11
         )
+--and dimTest.TestName = 'Prostate'
  -- and fctOLI.OrderLineItemID in ('OL001046979','OL001006299','OL001097795','OL001097779','OL001096680','OL001098246','OL001100732')
  -- and fctOLI.OrderLineItemID in ('OL000761250','OL000913816')
  -- and fctOLI.OrderID in ('OR001077870','OR001077883','OR001078111')

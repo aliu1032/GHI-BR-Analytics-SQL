@@ -17,7 +17,10 @@ Select ptv.Name
 , ptv.OSM_Billing_Modifier__c Billing_Modifier
 , ptv.OSM_Prior_Authorization__c
 , ptv.GHI_PayorSOMNTemplate__c
-, ptv.OSM_PA_Required__c
+, case
+  when ptv.OSM_PA_Required__c = '1' then 'Yes'
+  else 'No'
+  end as PA_Required
 , ptv.GHI_PhysicianAlertRequired__c
 --, ptv.OSM_SOMN_Required__c
 --, ptv.OSM_Report_Hold__c
@@ -50,7 +53,10 @@ Select ptv.Name
 , ptv.OSM_Billing_Modifier__c Billing_Modifier
 , ptv.OSM_Prior_Authorization__c
 , ptv.GHI_PayorSOMNTemplate__c
-, ptv.OSM_PA_Required__c
+, case
+  when ptv.OSM_PA_Required__c = '1' then 'Yes'
+  else 'No'
+  end as PA_Required
 , ptv.GHI_PhysicianAlertRequired__c
 --, ptv.OSM_SOMN_Required__c
 --, ptv.OSM_Report_Hold__c

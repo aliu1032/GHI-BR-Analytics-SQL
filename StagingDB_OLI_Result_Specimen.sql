@@ -1,5 +1,7 @@
 select O.OrderNumber, OSM_Order_Line_Item_ID__c OLIID
+, OLI.IBC_Candidate_for_Adj_Chemo__c IBC_Candidate_for_Adj_Chemo
 , specimen.OSM_Procedure_Type__c ProcedureType
+, specimen.OSM_Age_of_Specimen__c Age_Of_Specimen
 , OLI.OSM_Test_Name__c Test
 , result.Name CurrentResult, specimen.Name ResultedSpecimenID
 , OLI.OSM_OLI_Start_Date__c 'OLI Start Date', OLI.OSM_Test_Delivered_Date__c 'Test Delivered Date'
